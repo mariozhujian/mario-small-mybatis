@@ -1,0 +1,60 @@
+# ========================
+# 编译输出
+# ========================
+/target/
+*/target/
+build/
+*/build/
+
+# ========================
+# 临时文件
+# ========================
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+*.class
+
+# ========================
+# IDE 配置
+# ========================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+
+# VS Code
+.vscode/
+
+# ========================
+# 操作系统相关
+# ========================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ========================
+# 包管理工具缓存
+# ========================
+.mvn/
+.gradle/
+!gradle-wrapper.jar
