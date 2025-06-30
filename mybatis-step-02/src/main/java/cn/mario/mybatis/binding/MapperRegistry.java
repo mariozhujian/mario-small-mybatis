@@ -2,6 +2,7 @@ package cn.mario.mybatis.binding;
 
 
 
+import cn.mario.mybatis.session.Configuration;
 import cn.mario.mybatis.session.SqlSession;
 import cn.mario.mybatis.utils.ClassScanner;
 
@@ -18,8 +19,14 @@ public class MapperRegistry {
 
     private final Map<Class<?>, MapperProxyFactory<?>> knowMappers = new HashMap<>();
 
+    private Configuration configuration;
+
+    public MapperRegistry(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
-        final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knowMappers.get(type);
+        MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) this.knowMappers.get(type);
         if (mapperProxyFactory == null) {
             throw new RuntimeException("Type " + type + " is not known to the MapperRegistry.");
         }
@@ -31,6 +38,7 @@ public class MapperRegistry {
     }
 
     public <T> void addMapper(Class<T> type) {
+        /* Mapper 必须是接口才会注册 */
         if (type.isInterface()) {
             if (hasMapper(type)) {
                 // 如果重复添加了，报错

@@ -1,26 +1,22 @@
 package cn.mario.mybatis.mapping;
 
 
-import org.apache.ibatis.mapping.SqlCommandType;
-
-import javax.security.auth.login.Configuration;
-import java.util.Map;
+import cn.mario.mybatis.session.Configuration;
+import lombok.Data;
 
 /**
  * @description: 映射语句类
  * @author: mario
  * @date: 2025/6/27
  */
+@Data
 public class MappedStatement {
 
     private Configuration configuration;
     private String id;
     private SqlCommandType sqlCommandType;
 
-    private String parameterType;
-    private String resultType;
-    private String sql;
-    private Map<Integer, String> parameter;
+    private BoundSql boundSql;
 
     MappedStatement() {
 
@@ -30,17 +26,13 @@ public class MappedStatement {
      * 建造者
      */
     public static class Builder {
-        private MappedStatement mappedStatement = new MappedStatement();
+        private final MappedStatement mappedStatement = new MappedStatement();
 
-        public Builder(Configuration configuration, String id, SqlCommandType sqlCommandType, String parameterTyp,
-                       String resultType, String sql, Map<Integer, String> parameter) {
+        public Builder(Configuration configuration, String id, SqlCommandType sqlCommandType, BoundSql boundSql) {
             mappedStatement.configuration = configuration;
             mappedStatement.id = id;
             mappedStatement.sqlCommandType = sqlCommandType;
-            mappedStatement.parameterType = parameterTyp;
-            mappedStatement.resultType = resultType;
-            mappedStatement.sql = sql;
-            mappedStatement.parameter = parameter;
+            mappedStatement.boundSql = boundSql;
         }
 
         public MappedStatement build() {

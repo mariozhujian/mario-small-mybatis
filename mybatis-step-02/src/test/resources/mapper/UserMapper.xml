@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="">
-
+<mapper namespace="cn.mario.mybatis.dao.IUserDao">
+    <select id="queryUserInfoById" parameterType="java.lang.Long" resultType="cn.mario.mybatis.po.SystemUser">
+        SELECT id, userName, createTime
+        FROM system_users
+        where id = #{id}
+    </select>
 </mapper>

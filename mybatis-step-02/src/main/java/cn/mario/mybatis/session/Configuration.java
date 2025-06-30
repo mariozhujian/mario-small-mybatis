@@ -2,7 +2,13 @@ package cn.mario.mybatis.session;
 
 
 import cn.mario.mybatis.binding.MapperRegistry;
+import cn.mario.mybatis.mapping.Environment;
 import cn.mario.mybatis.mapping.MappedStatement;
+import cn.mario.mybatis.type.TypeAliasRegistry;
+import lombok.Data;
+import org.apache.ibatis.datasource.pooled.PooledDataSourceFactory;
+import org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +18,13 @@ import java.util.Map;
  * @author: mario
  * @date: 2025/6/27
  */
+@Data
 public class Configuration {
+
+    /**
+     * 环境
+     */
+    private Environment environment;
 
     /**
      * 映射注册机
@@ -23,6 +35,16 @@ public class Configuration {
      * 映射的语句，存在Map里
      */
     protected final Map<String, MappedStatement> mappedStatements = new HashMap<>();
+
+    // 类型别名注册机
+    protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+
+    public Configuration() {
+        this.typeAliasRegistry.registerAlias("JDBC", JdbcTransactionFactory.class);
+//        this.typeAliasRegistry.registerAlias("DRUID", DruidDataSourceFactory.class);
+        this.typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
+        this.typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
+    }
 
     public void addMappers(String packageName) {
         mapperRegistry.addMappers(packageName);
